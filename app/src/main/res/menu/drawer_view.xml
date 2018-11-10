@@ -6,15 +6,19 @@
         <menu>
             <item
                 android:title="Hospital"
+                android:id="@+id/hospital"
                 app:actionLayout="@layout/widget_check" />
             <item
                 android:title="Park"
+                android:id="@+id/park"
                 app:actionLayout="@layout/widget_check" />
             <item
                 android:title="School"
+                android:id="@+id/school"
                 app:actionLayout="@layout/widget_check" />
             <item
                 android:title="Transport"
+                android:id="@+id/transport"
                 app:actionLayout="@layout/widget_check" />
         </menu>
     </item>
