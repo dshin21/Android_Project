@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -104,6 +106,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return super.onOptionsItemSelected(item);
     }
 
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.hospital:
+                if (checked)
+                    Toast.makeText(this, "checked", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(this, "unchecked", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.park:
+                if (checked)
+                break;
+            case R.id.school:
+                if (checked)
+                break;
+            case R.id.transport:
+                if (checked)
+                break;
+            case R.id.mall:
+                if (checked)
+                break;
+            case R.id.railway:
+                if (checked)
+                break;
+        }
+    }
 
     /**
      * Manipulates the map once available.
