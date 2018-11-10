@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="Good stuff">
+        <menu>
+            <item
+                android:title="Hospital"
+                app:actionLayout="@layout/widget_check" />
+            <item
+                android:title="Park"
+                app:actionLayout="@layout/widget_check" />
+            <item
+                android:title="School"
+                app:actionLayout="@layout/widget_check" />
+            <item
+                android:title="Transport"
+                app:actionLayout="@layout/widget_check" />
+        </menu>
+    </item>
+
+
+    <item
+        android:title="bad stuff">
+        <menu>
+            <item
+                android:title="Gangsta"
+                app:actionLayout="@layout/widget_check" />
+            <item
+                android:title="FuckBois"
+                app:actionLayout="@layout/widget_check" />
+            <item
+                android:title="Druggies"
+                app:actionLayout="@layout/widget_check" />
+            <item
+                android:title="CheckBox"
+                app:actionLayout="@layout/widget_check" />
+        </menu>
+    </item>
+</menu>
