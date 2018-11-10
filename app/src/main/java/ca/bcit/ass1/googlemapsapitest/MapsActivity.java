@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -16,6 +17,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -23,10 +25,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import java.util.ArrayList;
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
+    private static LocationManager lm = new LocationManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,9 +124,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 
-        // Add a marker in Sydney and move the camera
+
         LatLng newWest = new LatLng(49.211677, -122.915867);
-        mMap.addMarker(new MarkerOptions().position(newWest).title("Sample Household"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(newWest));
         mMap.moveCamera(CameraUpdateFactory.zoomTo((float)12.5));
 
@@ -156,22 +160,44 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         newWestBoundary.setStrokeColor(0xffFF0000);
 
-        CircleOptions circleOptions = new CircleOptions()
-                .center(newWest)
-                .radius(300)
-                .strokeWidth(3)
-                .strokeColor(0xffffff99)
-                .fillColor(0x99ffff99)
-                .clickable(true);
+        /**
+         * Adding circles
+         */
+//        CircleOptions circleOptions = new CircleOptions()
+//                .center(newWest)
+//                .radius(300)
+//                .strokeWidth(3)
+//                .strokeColor(0xffffff99)
+//                .fillColor(0x99ffff99)
+//                .clickable(true);
+//
+//        Circle circle = mMap.addCircle(circleOptions);
+//
+//        mMap.setOnCircleClickListener(new GoogleMap.OnCircleClickListener() {
+//            @Override
+//            public void onCircleClick(Circle circle) {
+//                mMap.animateCamera(CameraUpdateFactory.newLatLng(circle.getCenter()));
+//                mMap.animateCamera(CameraUpdateFactory.zoomTo(1));
+//            }
+//        });
 
-        Circle circle = mMap.addCircle(circleOptions);
+        display(lm);
+    }
 
-        mMap.setOnCircleClickListener(new GoogleMap.OnCircleClickListener() {
-            @Override
-            public void onCircleClick(Circle circle) {
-                mMap.animateCamera(CameraUpdateFactory.newLatLng(circle.getCenter()));
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(1));
-            }
-        });
+    public void display(LocationManager lm) {
+
+        ArrayList<Location> list = lm.getLocations();
+        for(int i = 0; i < list.size(); i++) {
+            LatLng coords = new LatLng(list.get(i).getLatitude(), list.get(i).getLongitude());
+            mMap.addMarker(new MarkerOptions().position(coords).title(list.get(i).getName()).icon(BitmapDescriptorFactory.defaultMarker(list.get(i).getColor())));
+        }
+    }
+
+    public void onCheck(String type) {
+
+    }
+
+    public void onUncheck(String type) {
+
     }
 }
