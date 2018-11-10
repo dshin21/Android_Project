@@ -134,9 +134,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 break;
             case R.id.mall:
                 if (checked)
+                    onCheck("mall");
+                else
+                    onUncheck("mall");
                 break;
             case R.id.railway:
                 if (checked)
+                    onCheck("railway");
+                else
+                    onUncheck("railway");
                 break;
         }
     }
@@ -159,6 +165,33 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng newWest = new LatLng(49.211677, -122.915867);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(newWest));
         mMap.moveCamera(CameraUpdateFactory.zoomTo((float)12.5));
+
+
+        /**
+         * Adding circles
+         */
+//        CircleOptions circleOptions = new CircleOptions()
+//                .center(newWest)
+//                .radius(300)
+//                .strokeWidth(3)
+//                .strokeColor(0xffffff99)
+//                .fillColor(0x99ffff99)
+//                .clickable(true);
+//
+//        Circle circle = mMap.addCircle(circleOptions);
+//
+//        mMap.setOnCircleClickListener(new GoogleMap.OnCircleClickListener() {
+//            @Override
+//            public void onCircleClick(Circle circle) {
+//                mMap.animateCamera(CameraUpdateFactory.newLatLng(circle.getCenter()));
+//                mMap.animateCamera(CameraUpdateFactory.zoomTo(1));
+//            }
+//        });
+
+        display(lm);
+    }
+
+    public void display(LocationManager lm) {
 
         Polygon newWestBoundary = mMap.addPolygon(new PolygonOptions()
                 .add(
@@ -187,35 +220,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         new LatLng(49.23697514899956, -122.89343239190458),
                         new LatLng(49.23652681417426, -122.89326073052763),
                         new LatLng(49.23585430430592, -122.89669395806669))
-                );
+        );
 
         newWestBoundary.setStrokeColor(0xffFF0000);
-
-        /**
-         * Adding circles
-         */
-//        CircleOptions circleOptions = new CircleOptions()
-//                .center(newWest)
-//                .radius(300)
-//                .strokeWidth(3)
-//                .strokeColor(0xffffff99)
-//                .fillColor(0x99ffff99)
-//                .clickable(true);
-//
-//        Circle circle = mMap.addCircle(circleOptions);
-//
-//        mMap.setOnCircleClickListener(new GoogleMap.OnCircleClickListener() {
-//            @Override
-//            public void onCircleClick(Circle circle) {
-//                mMap.animateCamera(CameraUpdateFactory.newLatLng(circle.getCenter()));
-//                mMap.animateCamera(CameraUpdateFactory.zoomTo(1));
-//            }
-//        });
-
-        display(lm);
-    }
-
-    public void display(LocationManager lm) {
 
         ArrayList<Location> list = lm.getLocations();
         for(int i = 0; i < list.size(); i++) {
@@ -225,10 +232,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void onCheck(String type) {
-
+        lm.show(type);
+        mMap.clear();
+        display(lm);
     }
 
     public void onUncheck(String type) {
-
+        lm.hide(type);
+        mMap.clear();
+        display(lm);
     }
 }

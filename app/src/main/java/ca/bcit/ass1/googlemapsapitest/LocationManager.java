@@ -49,4 +49,16 @@ public class LocationManager {
         }
         return list;
     }
+
+    public void show(String type){
+        if(map.containsKey(type)) {
+            map.put(type, true);
+        }
+    }
+
+    public void hide(String type){
+        if(map.containsKey(type)) {
+            map.put(type, false);
+        }
+    }
 }
