@@ -1,6 +1,6 @@
 package ca.bcit.ass1.googlemapsapitest;
 
-public class Mall extends Location {
+public class Mall extends Landmark {
 
     private static int color = 120;
     public Mall() {

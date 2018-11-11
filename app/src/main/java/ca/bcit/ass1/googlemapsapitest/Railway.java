@@ -1,6 +1,6 @@
 package ca.bcit.ass1.googlemapsapitest;
 
-public class Railway extends Location {
+public class Railway extends Landmark {
 
     public Railway() {
         super();

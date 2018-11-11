@@ -1,6 +1,8 @@
 package ca.bcit.ass1.googlemapsapitest;
 
-import android.support.v4.app.FragmentActivity;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,17 +25,21 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
-    private static LocationManager lm = new LocationManager();
+    private static LandmarkManager lm = new LandmarkManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,11 +194,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //            }
 //        });
 
-        display(lm);
+        displayLocations(lm);
+
+        displayAddress();
     }
 
-    public void display(LocationManager lm) {
-
+    public void displayOutline() {
         Polygon newWestBoundary = mMap.addPolygon(new PolygonOptions()
                 .add(
                         new LatLng(49.20098836654929, -122.96034210896909),
@@ -223,8 +230,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         );
 
         newWestBoundary.setStrokeColor(0xffFF0000);
+    }
+    public void displayLocations(LandmarkManager lm) {
 
-        ArrayList<Location> list = lm.getLocations();
+        displayOutline();
+
+        ArrayList<Landmark> list = lm.getLocations();
         for(int i = 0; i < list.size(); i++) {
             LatLng coords = new LatLng(list.get(i).getLatitude(), list.get(i).getLongitude());
             mMap.addMarker(new MarkerOptions().position(coords).title(list.get(i).getName()).icon(BitmapDescriptorFactory.defaultMarker(list.get(i).getColor())));
@@ -234,12 +245,67 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onCheck(String type) {
         lm.show(type);
         mMap.clear();
-        display(lm);
+        displayLocations(lm);
     }
 
     public void onUncheck(String type) {
         lm.hide(type);
         mMap.clear();
-        display(lm);
+        displayLocations(lm);
+    }
+
+    public void displayAddress() {
+        mMap.clear();
+        displayOutline();
+
+        String address = "610 6th St, New Westminster";
+        Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
+        try
+        {
+            List<Address> addresses = geoCoder.getFromLocationName(address, 5);
+            if (addresses.size() > 0)
+            {
+                Double lat = (double) (addresses.get(0).getLatitude());
+                Double lon = (double) (addresses.get(0).getLongitude());
+
+                Log.d("lat-long", "" + lat + "......." + lon);
+                final LatLng user = new LatLng(lat, lon);
+                /*used marker for show the location */
+                Marker hamburg = mMap.addMarker(new MarkerOptions()
+                        .position(user)
+                        .title(address));
+                // Move the camera instantly to hamburg with a zoom of 15.
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(user, 15));
+                surroundingLocations(user);
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void surroundingLocations(LatLng location) {
+        CircleOptions circleOptions = new CircleOptions()
+        .center(location)
+        .radius(300)
+        .strokeWidth(3)
+        .strokeColor(0xffffff99)
+        .fillColor(0x99ffff99)
+        .clickable(true);
+
+        Circle circle = mMap.addCircle(circleOptions);
+
+        float[] distance = new float[2];
+
+        ArrayList<Landmark> list = lm.getLocations();
+        for(int i = 0; i < list.size(); i++) {
+            Location.distanceBetween(list.get(i).getLatitude(), list.get(i).getLongitude(), circle.getCenter().latitude,circle.getCenter().longitude,distance);
+            if ( distance[0] <= circle.getRadius())
+            {
+                LatLng coords = new LatLng(list.get(i).getLatitude(), list.get(i).getLongitude());
+                mMap.addMarker(new MarkerOptions().position(coords).title(list.get(i).getName()).icon(BitmapDescriptorFactory.defaultMarker(list.get(i).getColor())));
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 package ca.bcit.ass1.googlemapsapitest;
 
-public class Location {
+public class Landmark {
 
     private String name;
     private String type;
@@ -8,7 +8,7 @@ public class Location {
     private double latitude;
     private float color;
 
-    public Location(){
+    public Landmark(){
         name = "Empty";
         type = "none";
         longitude = 0;
@@ -16,7 +16,7 @@ public class Location {
         color = 0;
     }
 
-    public Location(String n, String t, double lo, double la, float c) {
+    public Landmark(String n, String t, double lo, double la, float c) {
         name = n;
         type = t;
         longitude = lo;
