@@ -1,15 +1,16 @@
 package ca.bcit.ass1.googlemapsapitest;
 
+import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -35,6 +36,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import ca.bcit.ass1.googlemapsapitest.Database.DB;
+import ca.bcit.ass1.googlemapsapitest.Database.Entities.BusStop;
+import ca.bcit.ass1.googlemapsapitest.Database.Entities.FiberNetwork;
+import ca.bcit.ass1.googlemapsapitest.Database.Entities.MajorShopping;
+import ca.bcit.ass1.googlemapsapitest.Database.Entities.Park;
+import ca.bcit.ass1.googlemapsapitest.Database.Entities.SkytrainStationPts;
+import ca.bcit.ass1.googlemapsapitest.Database.Entities.SportsFields;
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -45,6 +54,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        new initDB().execute();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -86,6 +98,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
         );
 
+
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -105,6 +119,108 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 });
 
+    }
+
+    public class initDB extends AsyncTask<Void, Void, Void> {
+        public initDB() {
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            SQLiteOpenHelper helper = new DB(MapsActivity.this);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            makeBusStops();
+            makeFiberNetwork();
+            makeMajorShopping ();
+            makeParks();
+            makeSkytrainStationPts();
+            makeSportFields();
+
+            Log.e("TETETETETETETE", BusStop.busStops.get(0).getName());
+        }
+
+        void makeBusStops() {
+            DB db = new DB(MapsActivity.this);
+            List<String> name = db.getName("BUS_STOPS");
+            List<String> lat = db.getLat("BUS_STOPS");
+            List<String> lng = db.getLng("BUS_STOPS");
+            for (int i = 0; i < name.size(); ++i) {
+                BusStop.busStops.add(new BusStop(name.get(i),
+                        Double.parseDouble(lat.get(i)),
+                        Double.parseDouble(lng.get(i))));
+            }
+        }
+
+        void makeFiberNetwork() {
+            DB db = new DB(MapsActivity.this);
+            List<String> name = db.getName("FIBER_NETWORK");
+            List<String> lat = db.getLat("FIBER_NETWORK");
+            List<String> lng = db.getLng("FIBER_NETWORK");
+            for (int i = 0; i < name.size(); ++i) {
+                FiberNetwork.fiberNetworks.add(new FiberNetwork(name.get(i),
+                        Double.parseDouble(lat.get(i)),
+                        Double.parseDouble(lng.get(i))));
+            }
+        }
+
+        void makeMajorShopping() {
+            DB db = new DB(MapsActivity.this);
+            List<String> name = db.getName("MAJOR_SHOPPING");
+            List<String> lat = db.getLat("MAJOR_SHOPPING");
+            List<String> lng = db.getLng("MAJOR_SHOPPING");
+            for (int i = 0; i < name.size(); ++i) {
+                MajorShopping.majorShoppings.add(new MajorShopping(name.get(i),
+                        Double.parseDouble(lat.get(i)),
+                        Double.parseDouble(lng.get(i))));
+            }
+        }
+
+        void makeParks() {
+            DB db = new DB(MapsActivity.this);
+            List<String> name = db.getName("PARKS");
+            List<String> lat = db.getLat("PARKS");
+            List<String> lng = db.getLng("PARKS");
+            for (int i = 0; i < name.size(); ++i) {
+                Park.parks.add(new Park(name.get(i),
+                        Double.parseDouble(lat.get(i)),
+                        Double.parseDouble(lng.get(i))));
+            }
+        }
+
+        void makeSkytrainStationPts() {
+            DB db = new DB(MapsActivity.this);
+            List<String> name = db.getName("SKYTRAIN_STATIONS_PTS");
+            List<String> lat = db.getLat("SKYTRAIN_STATIONS_PTS");
+            List<String> lng = db.getLng("SKYTRAIN_STATIONS_PTS");
+            for (int i = 0; i < name.size(); ++i) {
+                SkytrainStationPts.skytrainStationPts.add(new SkytrainStationPts(name.get(i),
+                        Double.parseDouble(lat.get(i)),
+                        Double.parseDouble(lng.get(i))));
+            }
+        }
+
+        void makeSportFields() {
+            DB db = new DB(MapsActivity.this);
+            List<String> name = db.getName("SPORTS_FIELDS");
+            List<String> lat = db.getLat("SPORTS_FIELDS");
+            List<String> lng = db.getLng("SPORTS_FIELDS");
+            for (int i = 0; i < name.size(); ++i) {
+                SportsFields.sportsFields.add(new SportsFields(name.get(i),
+                        Double.parseDouble(lat.get(i)),
+                        Double.parseDouble(lng.get(i))));
+            }
+        }
     }
 
     @Override
