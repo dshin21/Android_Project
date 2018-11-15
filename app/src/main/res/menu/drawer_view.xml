@@ -20,6 +20,10 @@
                 android:title="Transport"
                 android:id="@+id/transport"
                 app:actionLayout="@layout/widget_check" />
+            <item
+                android:title="Mall"
+                android:id="@+id/mall"
+                app:actionLayout="@layout/widget_check" />
         </menu>
     </item>
 
@@ -28,7 +32,8 @@
         android:title="bad stuff">
         <menu>
             <item
-                android:title="Gangsta"
+                android:title="Railway"
+                android:id="@+id/railway"
                 app:actionLayout="@layout/widget_check" />
             <item
                 android:title="FuckBois"

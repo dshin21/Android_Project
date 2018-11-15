@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -48,7 +49,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
-    private static LandmarkManager lm = new LandmarkManager();
+    private static LandmarkManager lm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +148,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             makeSkytrainStationPts();
             makeSportFields();
 
-            Log.e("TETETETETETETE", BusStop.busStops.get(0).getName());
+            lm = new LandmarkManager();
+
+            displayLocations(lm);
+
+//            displayAddress();
         }
 
         void makeBusStops() {
@@ -283,36 +288,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 
-
         LatLng newWest = new LatLng(49.211677, -122.915867);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(newWest));
         mMap.moveCamera(CameraUpdateFactory.zoomTo((float)12.5));
-
-
-        /**
-         * Adding circles
-         */
-//        CircleOptions circleOptions = new CircleOptions()
-//                .center(newWest)
-//                .radius(300)
-//                .strokeWidth(3)
-//                .strokeColor(0xffffff99)
-//                .fillColor(0x99ffff99)
-//                .clickable(true);
-//
-//        Circle circle = mMap.addCircle(circleOptions);
-//
-//        mMap.setOnCircleClickListener(new GoogleMap.OnCircleClickListener() {
-//            @Override
-//            public void onCircleClick(Circle circle) {
-//                mMap.animateCamera(CameraUpdateFactory.newLatLng(circle.getCenter()));
-//                mMap.animateCamera(CameraUpdateFactory.zoomTo(1));
-//            }
-//        });
-
-        displayLocations(lm);
-
-        displayAddress();
     }
 
     public void displayOutline() {
@@ -354,6 +332,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         ArrayList<Landmark> list = lm.getLocations();
         for(int i = 0; i < list.size(); i++) {
             LatLng coords = new LatLng(list.get(i).getLatitude(), list.get(i).getLongitude());
+            Log.e("banana1", Double.toString(list.get(i).getLatitude()));
             mMap.addMarker(new MarkerOptions().position(coords).title(list.get(i).getName()).icon(BitmapDescriptorFactory.defaultMarker(list.get(i).getColor())));
         }
     }
