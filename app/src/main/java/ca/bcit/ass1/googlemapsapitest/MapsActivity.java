@@ -1,5 +1,6 @@
 package ca.bcit.ass1.googlemapsapitest;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Address;
 import android.location.Geocoder;
@@ -12,11 +13,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,6 +40,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import ca.bcit.ass1.googlemapsapitest.Database.DB;
 import ca.bcit.ass1.googlemapsapitest.Database.Entities.BusStop;
@@ -227,12 +232,41 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu. This adds items to the app bar.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+
+            case R.id.search:
+                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
+
+                SearchView mSearchView = (SearchView) item.getActionView();
+                mSearchView.setQueryHint("Search");
+                mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+
+
+                        // Add your function here to search
+                        Toast.makeText(MapsActivity.this, "Search", Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+
+                        return false;
+                    }
+                });
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -403,4 +437,5 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
     }
+
 }
