@@ -79,7 +79,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
-
         mDrawerLayout.addDrawerListener(
                 new DrawerLayout.DrawerListener() {
                     @Override
@@ -155,9 +154,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             lm = new LandmarkManager();
 
-            displayLocations(lm);
-
-//            displayAddress();
+            displayOutline();
+//            displayLocations(lm);
         }
 
         void makeBusStops() {
@@ -256,8 +254,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     public boolean onQueryTextSubmit(String query) {
 
 
-                        // Add your function here to search
-                        Toast.makeText(MapsActivity.this, "Search", Toast.LENGTH_SHORT).show();
+                       displayAddress(query);
                         return true;
                     }
 
@@ -321,6 +318,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng arg0) {
+                displayAddress(arg0);
+            }
+        });
 
         LatLng newWest = new LatLng(49.211677, -122.915867);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(newWest));
@@ -383,11 +386,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         displayLocations(lm);
     }
 
-    public void displayAddress() {
+    public void displayAddress(String addr) {
         mMap.clear();
         displayOutline();
 
-        String address = "610 6th St, New Westminster";
+        String address = addr;
         Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
         try
         {
@@ -406,12 +409,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // Move the camera instantly to hamburg with a zoom of 15.
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(user, 15));
                 surroundingLocations(user);
+
+                if(!(addresses.get(0).getAddressLine(0).toLowerCase().contains("new westminster"))) {
+                    Toast t = Toast.makeText(getApplicationContext(), "Warning: You're currently not in New Westminster", Toast.LENGTH_SHORT);
+                    t.show();
+                }
+            }
+            else {
+                Toast t = Toast.makeText(getApplicationContext(), "Address not found", Toast.LENGTH_SHORT);
+                t.show();
             }
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
+    }
+
+    public void displayAddress(LatLng user) {
+        mMap.clear();
+        displayOutline();
+
+        Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
+        /*used marker for show the location */
+        Marker hamburg = mMap.addMarker(new MarkerOptions()
+                .position(user));
+        // Move the camera instantly to hamburg with a zoom of 15.
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(user, 15));
+//        mMap.animateCamera(zoom);
+        surroundingLocations(user);
     }
 
     public void surroundingLocations(LatLng location) {
