@@ -75,7 +75,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        actionbar.setTitle("Team Temp");
+        actionbar.setTitle("Best of the West");
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
