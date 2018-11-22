@@ -432,7 +432,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         .position(user)
                         .title(address));
                 // Move the camera instantly to hamburg with a zoom of 15.
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(user, 15));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user, 15), 500, null);
                 surroundingLocations(user);
 
                 if(!(addresses.get(0).getAddressLine(0).toLowerCase().contains("new westminster"))) {
@@ -460,8 +460,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Marker hamburg = mMap.addMarker(new MarkerOptions()
                 .position(user));
         // Move the camera instantly to hamburg with a zoom of 15.
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(user, 15));
-//        mMap.animateCamera(zoom);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user, 15), 500, null);
         surroundingLocations(user);
     }
 
