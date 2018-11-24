@@ -1,49 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:title="Good stuff">
-        <menu>
-            <item
-                android:title="Hospital"
-                android:id="@+id/hospital"
-                app:actionLayout="@layout/widget_check" />
-            <item
-                android:title="Park"
-                android:id="@+id/park"
-                app:actionLayout="@layout/widget_check" />
-            <item
-                android:title="School"
-                android:id="@+id/school"
-                app:actionLayout="@layout/widget_check" />
-            <item
-                android:title="Transport"
-                android:id="@+id/transport"
-                app:actionLayout="@layout/widget_check" />
-            <item
-                android:title="Mall"
-                android:id="@+id/mall"
-                app:actionLayout="@layout/widget_check" />
-        </menu>
-    </item>
+
+        <item
+            android:title="Bus Stop"
+            android:id="@+id/busStop"
+            app:actionLayout="@layout/widget_check" />
+        <item
+            android:title="FiberNetwork"
+            android:id="@+id/fiberNetwork"
+            app:actionLayout="@layout/widget_check" />
+        <item
+            android:title="Major Shopping"
+            android:id="@+id/shopping"
+            app:actionLayout="@layout/widget_check" />
+        <item
+            android:title="Park"
+            android:id="@+id/park"
+            app:actionLayout="@layout/widget_check" />
+        <item
+            android:title="Skytrain Station"
+            android:id="@+id/skytrain"
+            app:actionLayout="@layout/widget_check" />
+        <item
+            android:title="Sports Field"
+            android:id="@+id/sportFeilds"
+            app:actionLayout="@layout/widget_check" />
 
 
-    <item
-        android:title="bad stuff">
-        <menu>
-            <item
-                android:title="Railway"
-                android:id="@+id/railway"
-                app:actionLayout="@layout/widget_check" />
-            <item
-                android:title="FuckBois"
-                app:actionLayout="@layout/widget_check" />
-            <item
-                android:title="Druggies"
-                app:actionLayout="@layout/widget_check" />
-            <item
-                android:title="CheckBox"
-                app:actionLayout="@layout/widget_check" />
-        </menu>
-    </item>
 </menu>

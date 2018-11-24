@@ -1,13 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:background="#144099"
+    android:layout_height="80dp"
+    android:background="#a0a1a3"
     android:gravity="center">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Header"
+        android:text="Location"
         android:gravity="center"
         android:textSize="20sp"
         android:layout_marginTop="10dp"

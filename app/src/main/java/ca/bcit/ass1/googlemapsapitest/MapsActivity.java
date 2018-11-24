@@ -75,7 +75,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        actionbar.setTitle("Google Maps");
+        actionbar.setTitle("Best of the West");
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
@@ -265,6 +265,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
                 return true;
+
+            case R.id.reset:
+                Toast.makeText(this, "reset", Toast.LENGTH_SHORT).show();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -275,32 +279,53 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Check which checkbox was clicked
         switch(view.getId()) {
-            case R.id.hospital:
+            case R.id.busStop:
                 if (checked)
-                    Toast.makeText(this, "checked", Toast.LENGTH_LONG).show();
+                    //onCheck("Bus Stop");
+                    Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(this, "unchecked", Toast.LENGTH_LONG).show();
+                    //onUncheck("Bus Stop");
+                    Toast.makeText(this, "Unchecked", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fiberNetwork:
+                if (checked)
+                    //onCheck("Fiber Network");
+                    Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
+                else
+                    //onUncheck("Fiber Network");
+                    Toast.makeText(this, "Unchecked", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.shopping:
+                if (checked)
+                    //onCheck("shopping");
+                    Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
+                else
+                    //onUncheck("shopping");
+                    Toast.makeText(this, "Unchecked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.park:
                 if (checked)
-                break;
-            case R.id.school:
-                if (checked)
-                break;
-            case R.id.transport:
-                if (checked)
-                break;
-            case R.id.mall:
-                if (checked)
-                    onCheck("mall");
+                    //onCheck("park");
+                    Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
                 else
-                    onUncheck("mall");
+                    //onUncheck("park");
+                 Toast.makeText(this, "Unchecked", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.railway:
+            case R.id.skytrain:
                 if (checked)
-                    onCheck("railway");
+                    //onCheck("Skytrain");
+                    Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
                 else
-                    onUncheck("railway");
+                   // onUncheck("Skytrain");
+                    Toast.makeText(this, "Unchecked", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.sportFeilds:
+                if (checked)
+                    //onCheck("Sport Fields");
+                    Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
+                else
+                    //onUncheck("Sport Fields");
+                    Toast.makeText(this, "Unchecked", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

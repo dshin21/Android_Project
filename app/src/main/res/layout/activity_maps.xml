@@ -30,14 +30,6 @@ android:fitsSystemWindows="true">
         android:background="?attr/colorPrimary"
         android:gravity="center"
         >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:id="@+id/mapIcon"
-            android:src="@drawable/ic_map"
-            android:layout_height="30dp"
-            android:layout_toStartOf="@id/toolbar"
-            app:showAsAction="always"/>
     </android.support.v7.widget.Toolbar>
 
 
