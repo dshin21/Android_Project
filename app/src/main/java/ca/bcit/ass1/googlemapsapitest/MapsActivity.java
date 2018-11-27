@@ -267,7 +267,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return true;
 
             case R.id.reset:
-                Toast.makeText(this, "reset", Toast.LENGTH_SHORT).show();
+                reset();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -280,52 +280,52 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Check which checkbox was clicked
         switch(view.getId()) {
             case R.id.busStop:
-                if (checked)
-                    //onCheck("Bus Stop");
-                    Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
-                else
-                    //onUncheck("Bus Stop");
-                    Toast.makeText(this, "Unchecked", Toast.LENGTH_SHORT).show();
+                if (checked) {
+                    onCheck("busstop");
+                }
+                else {
+                    onUncheck("busstop");
+                }
                 break;
             case R.id.fiberNetwork:
-                if (checked)
-                    //onCheck("Fiber Network");
-                    Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
-                else
-                    //onUncheck("Fiber Network");
-                    Toast.makeText(this, "Unchecked", Toast.LENGTH_SHORT).show();
+                if (checked) {
+                    onCheck("fibernetwork");
+                }
+                else {
+                    onUncheck("fibernetwork");
+                }
                 break;
             case R.id.shopping:
-                if (checked)
-                    //onCheck("shopping");
-                    Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
-                else
-                    //onUncheck("shopping");
-                    Toast.makeText(this, "Unchecked", Toast.LENGTH_SHORT).show();
+                if (checked) {
+                    onCheck("majorshopping");
+                }
+                else {
+                    onUncheck("majorshopping");
+                }
                 break;
             case R.id.park:
-                if (checked)
-                    //onCheck("park");
-                    Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
-                else
-                    //onUncheck("park");
-                 Toast.makeText(this, "Unchecked", Toast.LENGTH_SHORT).show();
+                if (checked) {
+                    onCheck("park");
+                }
+                else {
+                    onUncheck("park");
+                }
                 break;
             case R.id.skytrain:
-                if (checked)
-                    //onCheck("Skytrain");
-                    Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
-                else
-                   // onUncheck("Skytrain");
-                    Toast.makeText(this, "Unchecked", Toast.LENGTH_SHORT).show();
+                if (checked) {
+                    onCheck("skytrainstation");
+                }
+                else {
+                    onUncheck("skytrainstation");
+                }
                 break;
             case R.id.sportFeilds:
-                if (checked)
-                    //onCheck("Sport Fields");
-                    Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
-                else
-                    //onUncheck("Sport Fields");
-                    Toast.makeText(this, "Unchecked", Toast.LENGTH_SHORT).show();
+                if (checked) {
+                    onCheck("sportsfield");
+                }
+                else {
+                    onUncheck("sportsfield");
+                }
                 break;
         }
     }
@@ -349,7 +349,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 displayAddress(arg0);
             }
         });
+        reset();
+    }
 
+    public void reset() {
         LatLng newWest = new LatLng(49.211677, -122.915867);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(newWest));
         mMap.moveCamera(CameraUpdateFactory.zoomTo((float)12.5));
@@ -401,14 +404,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void onCheck(String type) {
         lm.show(type);
-        mMap.clear();
-        displayLocations(lm);
     }
 
     public void onUncheck(String type) {
         lm.hide(type);
-        mMap.clear();
-        displayLocations(lm);
     }
 
     public void displayAddress(String addr) {
